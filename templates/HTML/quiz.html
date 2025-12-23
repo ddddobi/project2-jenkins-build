@@ -1,0 +1,50 @@
+{% extends 'HTML/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="max-width: 800px;">
+    <div class="flex flex-col gap-md mb-lg text-center">
+        <h1 class="text-2xl">{{ subcategory.name }} <span class="text-secondary text-lg">퀴즈</span></h1>
+        <p class="text-secondary">문제를 잘 읽고 정답을 선택해주세요. (70% 이상 정답 시 통과)</p>
+    </div>
+
+    <form method="POST" action="{% url 'quiz_submit' subcategory.id %}">
+        {% csrf_token %}
+
+        <div class="flex flex-col gap-lg">
+            {% for quiz in questions %}
+            <div class="card">
+                <div class="flex items-center gap-sm mb-md">
+                    <span class="btn btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">Q{{ forloop.counter }}</span>
+                    <h3 style="margin: 0; font-size: 1.1rem;">{{ quiz.question }}</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+                    <label class="quiz-option">
+                        <input type="radio" name="{{ quiz.id }}" value="1" required>
+                        <span class="option-text">{{ quiz.choice1 }}</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="{{ quiz.id }}" value="2" required>
+                        <span class="option-text">{{ quiz.choice2 }}</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="{{ quiz.id }}" value="3" required>
+                        <span class="option-text">{{ quiz.choice3 }}</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="{{ quiz.id }}" value="4" required>
+                        <span class="option-text">{{ quiz.choice4 }}</span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-xl text-center">
+            <button type="submit" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.1rem;">제출하기</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

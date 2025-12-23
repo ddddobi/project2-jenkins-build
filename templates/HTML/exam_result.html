@@ -1,0 +1,50 @@
+{% extends 'HTML/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container flex items-center justify-center" style="min-height: 60vh;">
+    <div class="card text-center" style="max-width: 500px; width: 100%;">
+
+        {% if passed %}
+        <div class="mb-lg">
+            <div class="mb-md text-primary">
+                <i class="ri-trophy-line" style="font-size: 4rem;"></i>
+            </div>
+            <h1 class="text-primary mb-sm">합격을 축하합니다!</h1>
+            <p class="text-secondary">훌륭해요! 퀴즈를 통과하셨습니다.</p>
+        </div>
+        {% else %}
+        <div class="mb-lg">
+            <div class="mb-md text-error" style="color: var(--error-color);">
+                <i class="ri-emotion-sad-line" style="font-size: 4rem;"></i>
+            </div>
+            <h1 class="text-error" style="color: var(--error-color); margin-bottom: 0.5rem;">아쉽게 불합격입니다.</h1>
+            <p class="text-secondary">조금만 더 노력하면 통과할 수 있어요!</p>
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-2 gap-md mb-lg p-md"
+            style="background-color: var(--background-color); border-radius: var(--radius-md);">
+            <div>
+                <p class="text-sm text-secondary mb-xs">내 점수</p>
+                <p class="text-xl font-bold">{{ score }} / {{ question_count }}</p>
+            </div>
+            <div>
+                <p class="text-sm text-secondary mb-xs">획득 포인트</p>
+                <p class="text-xl font-bold text-primary">+{{ reward }} P</p>
+            </div>
+        </div>
+
+        {% if already_rewarded and passed %}
+        <div class="mb-lg p-sm bg-yellow-50 text-warning rounded-md" style="background-color: #FFFBEB; color: #D97706;">
+            <p class="text-sm">※ 이미 보상을 받은 퀴즈입니다.</p>
+        </div>
+        {% endif %}
+
+        <div class="flex flex-col gap-sm">
+            <a href="{% url 'main_category_list' %}" class="btn btn-primary w-full">다른 퀴즈 풀기</a>
+            <a href="{% url 'main' %}" class="btn btn-secondary w-full">메인으로 돌아가기</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

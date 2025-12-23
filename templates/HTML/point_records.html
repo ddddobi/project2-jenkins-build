@@ -1,0 +1,79 @@
+{% extends "HTML/base.html" %}
+{% block title %}포인트 사용 내역{% endblock %}
+{% block content %}
+
+<div class="container" style="max-width: 800px;">
+    <div class="mb-lg text-center">
+        <h2 class="text-2xl mb-md flex items-center justify-center gap-sm">
+            <i class="ri-history-line text-primary"></i> 포인트 사용 내역
+        </h2>
+    </div>
+
+    <!-- 🎁 기프티콘 구매 내역 -->
+    <div class="mb-xl">
+        <h3 class="text-xl mb-md flex items-center gap-sm">
+            <div class="p-xs rounded-full bg-pink-50 text-secondary" style="background-color: #FDF2F8; color: #DB2777;">
+                <i class="ri-gift-line"></i>
+            </div>
+            기프티콘 구매 내역
+        </h3>
+
+        {% if gift_records %}
+        <div class="flex flex-col gap-md">
+            {% for record in gift_records %}
+            <div class="card flex justify-between items-center p-md">
+                <div>
+                    <div class="font-bold text-lg mb-xs">{{ record.gift_name }}</div>
+                    <div class="text-sm text-secondary">{{ record.created_at|date:"Y-m-d H:i" }}</div>
+                </div>
+                <div class="text-right">
+                    <div class="font-bold text-error">-{{ record.cost }} P</div>
+                    <div class="text-xs text-secondary">구매완료</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center p-lg border border-dashed border-gray-300 rounded-lg text-secondary">
+            기프티콘 구매 내역이 없습니다.
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- 💸 출금 내역 -->
+    <div class="mb-xl">
+        <h3 class="text-xl mb-md flex items-center gap-sm">
+            <div class="p-xs rounded-full bg-blue-50 text-primary" style="background-color: #EFF6FF; color: #3B82F6;">
+                <i class="ri-bank-card-line"></i>
+            </div>
+            출금 내역
+        </h3>
+
+        {% if withdraw_records %}
+        <div class="flex flex-col gap-md">
+            {% for record in withdraw_records %}
+            <div class="card flex justify-between items-center p-md">
+                <div>
+                    <div class="font-bold text-lg mb-xs">{{ record.bank_name }} ({{ record.account_number }})</div>
+                    <div class="text-sm text-secondary">{{ record.created_at|date:"Y-m-d H:i" }}</div>
+                </div>
+                <div class="text-right">
+                    <div class="font-bold text-error">-{{ record.amount }} P</div>
+                    <div class="text-xs text-secondary">출금신청</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center p-lg border border-dashed border-gray-300 rounded-lg text-secondary">
+            출금 신청 내역이 없습니다.
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="text-center">
+        <a href="{% url 'main' %}" class="btn btn-secondary">← 홈으로 돌아가기</a>
+    </div>
+</div>
+
+{% endblock %}

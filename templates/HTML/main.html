@@ -1,0 +1,94 @@
+{% extends 'HTML/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <!-- Dashboard Header -->
+    <div class="flex flex-col gap-sm mb-lg">
+        <h1>안녕하세요, <span class="text-primary">{{ username }}</span>님! <i class="ri-user-smile-line text-primary"></i>
+        </h1>
+        <p class="text-secondary">오늘도 즐거운 퀴즈 풀이 되세요.</p>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+        <!-- Points Card -->
+        <div class="card flex flex-col items-center justify-center text-center">
+            <h3 class="text-secondary text-sm font-bold uppercase tracking-wide">보유 포인트</h3>
+            <p class="text-2xl font-bold text-primary mt-sm">{{ balance }} P</p>
+            <div class="flex gap-sm mt-lg w-full">
+                <a href="{% url 'point' %}" class="btn btn-secondary w-full">포인트 관리</a>
+                <a href="{% url 'gift' %}" class="btn btn-secondary w-full">상점</a>
+            </div>
+        </div>
+
+        <!-- Quiz Action Card -->
+        <div class="card flex flex-col items-center justify-center text-center md:col-span-2"
+            style="background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white;">
+            <div class="mb-md p-md bg-white/10 rounded-full">
+                <i class="ri-pencil-ruler-2-line" style="font-size: 3rem;"></i>
+            </div>
+            <h2 style="color: white; margin-bottom: 0.5rem;">오늘의 퀴즈 도전하기</h2>
+            <p style="opacity: 0.9; margin-bottom: 1.5rem; color: rgba(255,255,255,0.9);">다양한 카테고리의 퀴즈를 풀고 포인트를 획득하세요!
+            </p>
+            <a href="{% url 'main_category_list' %}" class="btn"
+                style="background-color: white; color: var(--primary-color); border: none;">퀴즈 풀러 가기 &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="mt-xl">
+        <h3 class="mb-md">바로가기</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+            <a href="{% url 'notice_list' %}"
+                class="card flex flex-col gap-sm items-center justify-center hover:shadow-lg transition text-center p-lg">
+                <div class="p-sm rounded-full text-primary">
+                    <i class="ri-megaphone-line text-xl"></i>
+                </div>
+                <span class="font-bold text-sm">공지사항</span>
+            </a>
+            <a href="{% url 'bank_info' %}"
+                class="card flex flex-col gap-sm items-center justify-center hover:shadow-lg transition text-center p-lg">
+                <div class="p-sm rounded-full text-success">
+                    <i class="ri-bank-card-line text-xl"></i>
+                </div>
+                <span class="font-bold text-sm">계좌 관리</span>
+            </a>
+            <a href="{% url 'point_records' %}"
+                class="card flex flex-col gap-sm items-center justify-center hover:shadow-lg transition text-center p-lg">
+                <div class="p-sm rounded-full text-secondary">
+                    <i class="ri-history-line text-xl"></i>
+                </div>
+                <span class="font-bold text-sm">이용 내역</span>
+            </a>
+            <a href="{% url 'user_info' %}"
+                class="card flex flex-col gap-sm items-center justify-center hover:shadow-lg transition text-center p-lg">
+                <div class="p-sm rounded-full text-gray-500">
+                    <i class="ri-user-settings-line text-xl"></i>
+                </div>
+                <span class="font-bold text-sm">내 정보</span>
+            </a>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Landing Page for Guests -->
+    <div class="flex flex-col items-center justify-center text-center" style="min-height: 70vh;">
+        <div class="mb-lg p-lg bg-blue-50 rounded-full text-primary">
+            <i class="ri-question-answer-line" style="font-size: 4rem;"></i>
+        </div>
+        <h1 class="text-4xl md:text-5xl mb-md font-extrabold">Quiz Platform</h1>
+        <p class="text-secondary mb-xl text-lg" style="max-width: 600px; line-height: 1.6;">
+            다양한 퀴즈를 풀고 지식을 쌓아보세요.<br>
+            포인트를 모아 기프티콘으로 교환할 수도 있습니다.
+        </p>
+        <div class="flex gap-md">
+            <a href="{% url 'login' %}" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">로그인</a>
+            <a href="{% url 'signup' %}" class="btn btn-secondary"
+                style="padding: 1rem 2.5rem; font-size: 1.1rem;">회원가입</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

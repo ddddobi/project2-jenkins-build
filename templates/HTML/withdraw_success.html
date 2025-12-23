@@ -1,0 +1,72 @@
+{% extends "HTML/base.html" %}
+{% block title %}출금 완료{% endblock %}
+
+{% block content %}
+
+<style>
+    .withdraw-box {
+        max-width: 450px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #1f1f1f;
+        border-radius: 14px;
+        border: 1px solid #333;
+        color: #fff;
+        text-align: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .amount {
+        font-size: 30px;
+        font-weight: bold;
+        color: #4fa3ff;
+        margin-bottom: 10px;
+    }
+
+    .balance {
+        font-size: 18px;
+        color: #ccc;
+        margin-bottom: 20px;
+    }
+
+    .back-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #4fa3ff;
+        color: white !important;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .back-btn:hover {
+        background: #1d8aff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+
+<div class="withdraw-box">
+
+    <h2>💸 출금 완료</h2>
+
+    <p class="amount">{{ withdraw_amount }}P 출금 완료</p>
+
+    <p class="balance">현재 남은 포인트: <strong>{{ balance }}P</strong></p>
+
+    <a href="{% url 'point' %}" class="back-btn">← 포인트 페이지로 돌아가기</a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'HTML/base.html' %}
+{% block title %}모의고사 선택{% endblock %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Pretendard', sans-serif;
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-align: center;
+        color: #fff;
+    }
+
+    /* 대분류 그리드 */
+    .main-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 18px;
+        margin-bottom: 40px;
+    }
+
+    .main-card {
+        background: #1c1c1c;
+        padding: 22px;
+        border-radius: 12px;
+        text-align: center;
+        color: #fff;
+        border: 1px solid #2c2c2c;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .main-card:hover {
+        background: #2c2c2c;
+        transform: translateY(-4px);
+    }
+
+    /* 중분류 영역 */
+    .sub-box {
+        background: #181818;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #333;
+        margin-bottom: 35px;
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .sub-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        color: #eee;
+    }
+
+    /* 중분류 버튼 */
+    .sub-btn {
+        display: inline-block;
+        margin: 8px;
+        padding: 10px 20px;
+        background: #00c853;
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.25s;
+    }
+
+    .sub-btn:hover {
+        background: #00e676;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    function toggleSub(mainId) {
+        const allSub = document.querySelectorAll(".sub-box");
+        allSub.forEach(div => div.style.display = "none");
+
+        const target = document.getElementById("sub-" + mainId);
+        if (target) {
+            target.style.display = "block";
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+</script>
+
+
+<h2 class="page-title" style="color: var(--text-primary);">📘 모의고사 대분류 선택</h2>
+
+<!-- ⭐ 대분류 카드 목록 -->
+<div class="main-grid">
+    {% for main in main_categories %}
+    <div class="main-card" onclick="toggleSub({{ main.id }})"
+        style="background: var(--surface-color); color: var(--text-primary); border-color: var(--border-color);">
+        {{ main.name }}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- ⭐ 중분류 목록 -->
+{% for main in main_categories %}
+<div id="sub-{{ main.id }}" class="sub-box"
+    style="background: var(--background-color); border-color: var(--border-color);">
+    <div class="sub-title" style="color: var(--text-primary);">📗 {{ main.name }} 중분류 선택</div>
+
+    {% for sub in sub_categories %}
+        {% if sub.main_id == main.id %}
+            <a class="sub-btn" href="{% url 'quiz_view' sub.id %}" style="background-color: var(--primary-color);">
+                {{ sub.name }}
+            </a>
+        {% endif %}
+    {% empty %}
+    <p>등록된 중분류가 없습니다.</p>
+    {% endfor %}
+</div>
+{% endfor %}
+
+{% endblock %}

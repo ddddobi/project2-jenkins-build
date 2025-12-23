@@ -1,0 +1,110 @@
+{% extends "HTML/base.html" %}
+{% block title %}공지 삭제{% endblock %}
+{% block content %}
+
+<style>
+    .delete-wrapper {
+        max-width: 650px;
+        margin: 40px auto;
+        background: #1c1c1c;
+        padding: 30px;
+        border-radius: 14px;
+        border: 1px solid #333;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        animation: fadeIn 0.3s ease;
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 15px;
+        font-size: 26px;
+        font-weight: 700;
+        color: #ff5b5b;
+    }
+
+    .notice-box {
+        background: #2a2a2a;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: left;
+        border: 1px solid #444;
+    }
+
+    .notice-box h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .notice-box p {
+        margin-top: 10px;
+        line-height: 1.6;
+        color: #ddd;
+    }
+
+    .warning-text {
+        color: #ff4b4b;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .delete-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        background: #ff4b4b;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: 0.25s;
+        font-weight: 600;
+    }
+    .delete-btn:hover {
+        background: #e33d3d;
+    }
+
+    .cancel-btn {
+        display: block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #bbb;
+        font-size: 15px;
+        transition: 0.25s;
+    }
+    .cancel-btn:hover {
+        color: #fff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="delete-wrapper">
+
+    <h2>⚠ 공지 삭제</h2>
+
+    <p class="warning-text">정말 이 공지를 삭제하시겠습니까?</p>
+
+    <div class="notice-box">
+        <h3>{{ notice.title }}</h3>
+        <p>{{ notice.content }}</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">🚨 삭제하기</button>
+    </form>
+
+    <a href="{% url 'notice_detail' notice.id %}" class="cancel-btn">
+        취소하고 돌아가기
+    </a>
+
+</div>
+
+{% endblock %}

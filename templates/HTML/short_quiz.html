@@ -1,0 +1,42 @@
+{% extends 'HTML/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="max-width: 800px;">
+    <div class="flex flex-col gap-md mb-lg text-center">
+        <h1 class="text-2xl">{{ subcategory.name }} <span class="text-secondary text-lg">
+            
+            퀴즈</span></h1>
+        <p class="text-secondary">정답을 직접 입력해주세요. (70% 이상 정답 시 통과)</p>
+    </div>
+
+    <form method="POST" action="{% url 'quiz_submit' subcategory.id %}">
+        {% csrf_token %}
+
+        <div class="flex flex-col gap-lg">
+            {% for quiz in questions %}
+            <div class="card">
+                <div class="flex items-center gap-sm mb-md">
+                    <span class="btn btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">Q{{ forloop.counter }}</span>
+                    <h3 style="margin: 0; font-size: 1.1rem;">{{ quiz.question }}</h3>
+                </div>
+
+                <div class="flex flex-col gap-sm">
+                    <input type="text"
+                        name="{{ quiz.id }}"
+                        class="form-input"
+                        placeholder="정답을 입력하세요"
+                        required
+                        style="padding: 0.75rem; border-radius: 8px; border: 1px solid #ccc; width: 100%;">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-xl text-center">
+            <button type="submit" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.1rem;">제출하기</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

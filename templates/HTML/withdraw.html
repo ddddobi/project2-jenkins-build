@@ -1,0 +1,56 @@
+{% extends "HTML/base.html" %}
+{% block content %}
+
+<div class="container flex items-center justify-center" style="min-height: 60vh;">
+    <div class="card" style="max-width: 500px; width: 100%;">
+        <div class="mb-lg text-center">
+            <h2 class="text-2xl mb-md flex items-center justify-center gap-sm">
+                <i class="ri-exchange-dollar-line text-primary"></i> 포인트 출금
+            </h2>
+        </div>
+
+        <div class="mb-lg p-md bg-gray-50 rounded-md text-center border border-gray-200">
+            <span class="text-secondary">현재 보유 포인트:</span>
+            <span class="font-bold text-lg ml-sm">{{ balance }}P</span>
+        </div>
+
+        {% if error %}
+        <div class="mb-md p-sm bg-red-50 text-error rounded-md border border-red-100 text-center">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'withdraw_process' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label">출금할 포인트</label>
+                <input type="number" name="amount" class="form-input" min="1000" required
+                    placeholder="최소 1000P 이상 입력해주세요">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">은행명</label>
+                <select name="bank_name" class="form-input" required>
+                    <option value="">은행 선택</option>
+                    <option value="국민은행" {% if bank_info and bank_info.bank_name == "국민은행" %}selected{% endif %}>국민은행
+                    </option>
+                    <option value="우리은행" {% if bank_info and bank_info.bank_name == "우리은행" %}selected{% endif %}>우리은행
+                    </option>
+                    <option value="신한은행" {% if bank_info and bank_info.bank_name == "신한은행" %}selected{% endif %}>신한은행
+                    </option>
+                    <option value="카카오뱅크" {% if bank_info and bank_info.bank_name == "카카오뱅크" %}selected{% endif %}>카카오뱅크
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full mb-md">출금하기</button>
+        </form>
+
+        <div class="text-center">
+            <a href="{% url 'point' %}" class="btn btn-secondary w-full">← 이전 페이지로 돌아가기</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

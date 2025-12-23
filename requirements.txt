@@ -1,0 +1,10 @@
+asgiref==3.10.0
+Django==3.2.25
+gunicorn==23.0.0
+mysqlclient==2.1.1
+packaging==25.0
+pytz==2025.2
+sqlparse==0.5.3
+typing_extensions==4.15.0
+whitenoise==6.11.0
+

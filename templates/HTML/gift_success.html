@@ -1,0 +1,94 @@
+{% extends "HTML/base.html" %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Pretendard', sans-serif;
+    }
+
+    .gift-container {
+        max-width: 480px;
+        margin: 40px auto;
+        background: #181818;
+        padding: 32px;
+        color: white;
+        border-radius: 14px;
+        border: 1px solid #2a2a2a;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+        text-align: center;
+    }
+
+    .gift-title {
+        font-size: 24px;
+        margin-bottom: 18px;
+        font-weight: 700;
+    }
+
+    .gift-check {
+        font-size: 54px;
+        margin-bottom: 10px;
+    }
+
+    .gift-box {
+        background: #222;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #333;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .gift-row {
+        margin-bottom: 12px;
+        font-size: 16px;
+    }
+
+    .gift-row b {
+        color: #ddd;
+    }
+
+    .home-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background: black;
+        color: white;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        border: 1px solid #333;
+        text-decoration: none;
+        transition: 0.25s;
+    }
+
+    .home-btn:hover {
+        background: #333;
+        border-color: #444;
+    }
+</style>
+
+
+<div class="gift-container">
+
+    <div class="gift-check">🎁</div>
+    <div class="gift-title">기프티콘 발송 완료!</div>
+
+    <div class="gift-box">
+        <div class="gift-row">
+            <b>상품명:</b> {{ gift.gift_name }}
+        </div>
+        <div class="gift-row">
+            <b>인증 코드:</b> <span style="color:#00e676;font-weight:700;">{{ gift.code }}</span>
+        </div>
+        <div class="gift-row">
+            <b>남은 포인트:</b> {{ balance }}P
+        </div>
+    </div>
+
+    <a href="/" class="home-btn">🏠 홈으로 돌아가기</a>
+
+</div>
+
+{% endblock %}

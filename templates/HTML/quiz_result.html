@@ -1,0 +1,111 @@
+{% extends "HTML/base.html" %}
+{% block title %}모의고사 결과{% endblock %}
+
+{% block content %}
+
+<style>
+    .result-wrapper {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 25px;
+        background: #1b1b1b;
+        color: white;
+        border-radius: 14px;
+        border: 1px solid #333;
+        text-align: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .result-title {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .score-box {
+        background: #242424;
+        padding: 18px;
+        border-radius: 10px;
+        border: 1px solid #333;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    .pass {
+        color: #4fc46a;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .fail {
+        color: #ff4e4e;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .reward {
+        color: #4fa3ff;
+        font-size: 18px;
+        margin-top: 12px;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 22px;
+        background: #4fa3ff;
+        color: #fff !important;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        transition: 0.25s;
+    }
+
+    .back-btn:hover {
+        background: #1d8aff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="result-wrapper">
+
+    {% if message %}
+        <p style="color:#ff4e4e; font-size:18px; font-weight:bold; margin-top:20px;">
+            {{ message }}
+        </p>
+
+    {% else %}
+
+        <div class="result-title">📘 {{ category.name }} 모의고사 결과</div>
+
+        <div class="score-box">
+            총점: <strong>{{ score }}</strong> / {{ total }}
+        </div>
+
+        {% if passed %}
+            <div class="pass">🎉 합격입니다!</div>
+
+            {% if reward > 0 %}
+                <div class="reward">✨ {{ reward }} 포인트가 지급되었습니다!</div>
+            {% endif %}
+        {% else %}
+            <div class="fail">❌ 불합격입니다. 다음에 다시 도전하세요!</div>
+        {% endif %}
+
+        <div class="score-box" style="margin-top:25px;">
+            현재 보유 포인트: <strong>{{ balance }}P</strong>
+        </div>
+
+    {% endif %}
+
+    <a href="/" class="back-btn">← 홈으로 돌아가기</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "HTML/base.html" %}
+{% block title %}공지사항{% endblock %}
+{% block content %}
+
+<style>
+    .notice-detail-wrapper {
+        max-width: 750px;
+        margin: 30px auto;
+        padding: 30px;
+        background: #1c1c1c;
+        border-radius: 14px;
+        border: 1px solid #333;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        color: #fff;
+        animation: fadeIn 0.25s ease;
+    }
+
+    .notice-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .notice-date {
+        font-size: 14px;
+        color: #aaa;
+        margin-bottom: 20px;
+    }
+
+    .notice-content {
+        border: 1px solid #444;
+        background: #2a2a2a;
+        padding: 20px;
+        border-radius: 12px;
+        line-height: 1.7;
+        font-size: 16px;
+        white-space: pre-line;
+    }
+
+    .admin-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 16px;
+        background: #ff4b4b;
+        color: #fff !important;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+    .admin-btn:hover {
+        background: #d63737;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        font-size: 15px;
+        color: #4fa3ff;
+        text-decoration: none;
+        transition: 0.25s;
+    }
+    .back-btn:hover {
+        color: #8fc7ff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="notice-detail-wrapper">
+
+    <div class="notice-title">{{ notice.title }}</div>
+
+    <div class="notice-date">
+        📅 작성일: {{ notice.created_at|date:"Y-m-d H:i" }}
+    </div>
+
+    <div class="notice-content">
+        {{ notice.content|linebreaks }}
+    </div>
+
+    {% if user.is_superuser %}
+        <a class="admin-btn" href="{% url 'notice_delete' notice.id %}">
+            ⚠ 공지 삭제하기
+        </a>
+    {% endif %}
+
+    <a class="back-btn" href="{% url 'notice_list' %}">
+        ← 공지 목록으로 돌아가기
+    </a>
+
+</div>
+
+{% endblock %}

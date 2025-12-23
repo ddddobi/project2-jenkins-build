@@ -1,0 +1,30 @@
+{% extends "HTML/base.html" %}
+{% block title %}포인트 관리{% endblock %}
+{% block content %}
+
+<div class="container flex items-center justify-center" style="min-height: 60vh;">
+    <div class="card text-center" style="max-width: 600px; width: 100%;">
+        <div class="mb-lg">
+            <h2 class="text-2xl mb-md flex items-center justify-center gap-sm">
+                <i class="ri-coins-line text-primary"></i> 포인트 관리
+            </h2>
+        </div>
+
+        <div class="mb-lg p-lg bg-blue-50 rounded-lg border border-blue-100"
+            style="background-color: #EFF6FF; border-color: #BFDBFE;">
+            <p class="text-secondary mb-sm">현재 보유 포인트</p>
+            <span class="text-4xl font-bold text-primary">{{ balance }}P</span>
+        </div>
+
+        <div class="flex flex-col gap-md">
+            <a href="{% url 'withdraw' %}" class="btn btn-primary w-full">
+                <i class="ri-exchange-dollar-line" style="margin-right: 8px;"></i> 포인트 환전하기
+            </a>
+            <a href="{% url 'gift' %}" class="btn btn-secondary w-full">
+                <i class="ri-gift-line" style="margin-right: 8px;"></i> 기프티콘 교환하기
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

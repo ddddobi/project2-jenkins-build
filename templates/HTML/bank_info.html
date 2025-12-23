@@ -1,0 +1,91 @@
+{% extends 'HTML/base.html' %}
+{% block content %}
+
+<div class="container flex items-center justify-center" style="min-height: 60vh;">
+    <div class="card" style="max-width: 500px; width: 100%;">
+        <div class="mb-lg text-center">
+            <h2 class="text-2xl mb-md flex items-center justify-center gap-sm">
+                <i class="ri-bank-card-line text-primary"></i> 계좌 정보 관리
+            </h2>
+        </div>
+
+        {% if bank_info %}
+        <div class="mb-lg p-md bg-gray-50 rounded-md border border-gray-200">
+            <div class="flex justify-between mb-sm">
+                <span class="text-secondary">은행명</span>
+                <span class="font-bold">{{ bank_info.bank_name }}</span>
+            </div>
+            <div class="flex justify-between mb-sm">
+                <span class="text-secondary">계좌번호</span>
+                <span class="font-bold">{{ bank_info.account_number }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-secondary">예금주</span>
+                <span class="font-bold">{{ bank_info.account_holder }}</span>
+            </div>
+        </div>
+
+        <button onclick="toggleForm()" class="btn btn-secondary w-full">계좌 수정하기</button>
+
+        {% else %}
+        <div class="text-center mb-lg">
+            <p class="text-secondary mb-md">등록된 계좌가 없습니다.</p>
+            <button onclick="toggleForm()" class="btn btn-primary w-full">계좌 추가하기</button>
+        </div>
+        {% endif %}
+
+        <!-- Input Form -->
+        <form id="bankForm" class="mt-lg" method="post" action="{% url 'bank_info_save' %}" style="display: none;">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label">은행명</label>
+                <select name="bank_name" required class="form-input">
+                    <option value="">은행 선택</option>
+                    {% for name in bank_list %}
+                    <option value="{{ name }}" {% if bank_info and bank_info.bank_name == name %}selected{% endif %}>
+                        {{ name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">계좌번호</label>
+                <input type="text" name="account_number" class="form-input" required
+                    value="{% if bank_info %}{{ bank_info.account_number }}{% endif %}">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">예금주</label>
+                <input type="text" name="account_holder" class="form-input" required
+                    value="{% if bank_info %}{{ bank_info.account_holder }}{% endif %}">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full">저장하기</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleForm() {
+        const form = document.getElementById("bankForm");
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block";
+            // Simple fade in effect
+            form.style.opacity = 0;
+            let opacity = 0;
+            const timer = setInterval(function () {
+                if (opacity >= 1) {
+                    clearInterval(timer);
+                }
+                form.style.opacity = opacity;
+                opacity += 0.1;
+            }, 20);
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
+
+{% endblock %}

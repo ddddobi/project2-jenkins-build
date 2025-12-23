@@ -1,0 +1,71 @@
+{% extends 'HTML/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .choice input {
+    display: none;
+}
+
+.choice span {
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 2px solid #aaa;
+    transition: 0.2s;
+}
+
+/* 선택된 경우 UI 강조 */
+.choice input:checked + span {
+    background-color: #4F46E5;
+    color: white;
+    border-color: #4F46E5;
+}
+
+</style>
+<div class="container" style="max-width: 800px;">
+    <div class="flex flex-col gap-md mb-lg text-center">
+        <h1 class="text-2xl">{{ subcategory.name }} <span class="text-secondary text-lg"> 퀴즈</span></h1>
+        <p class="text-secondary">정답을 선택해주세요. (70% 이상 정답 시 통과)</p>
+    </div>
+
+    <form method="POST" action="{% url 'quiz_submit' subcategory.id %}">
+        {% csrf_token %}
+
+        <div class="flex flex-col gap-lg">
+            {% for quiz in questions %}
+            <div class="card">
+                <div class="flex items-center gap-sm mb-md">
+                    <span class="btn btn-primary"
+                          style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">Q{{ forloop.counter }}</span>
+                    <h3 style="margin: 0; font-size: 1.1rem;">{{ quiz.question }}</h3>
+                </div>
+
+                <!-- O/X 선택 영역 -->
+                <div class="flex gap-md" style="justify-content:center; margin-top:0.75rem;">
+
+                    <label class="choice">
+                        <input type="radio" name="{{ quiz.id }}" value="o" required>
+                        <span>O</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="{{ quiz.id }}" value="x" required>
+                        <span>X</span>
+                    </label>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-xl text-center">
+            <button type="submit" class="btn btn-primary"
+                    style="padding: 1rem 3rem; font-size: 1.1rem;">
+                제출하기
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
