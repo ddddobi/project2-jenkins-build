@@ -80,9 +80,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'users',
-        'USER': 'dbuser',
-        'PASSWORD': '@Dhtmdrms0213',
-        'HOST': '172.16.6.131',   # ✅ DB 서버 IP
+        'USER': 'admin',
+        'PASSWORD': 'soldesk1.',
+        'HOST': 'testdb.cdqo2us4mbw3.us-east-2.rds.amazonaws.com',   # ✅ DB 서버 IP
         'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',
