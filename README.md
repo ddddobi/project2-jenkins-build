@@ -35,4 +35,4 @@ $ python manage.py runserver 0.0.0.0:8000
 https://github.com/OhseungKeun/manifests 참고
 
 ## 작성자
-GitHub: Hello.ver2
+GitHub: Hello.ROSA
